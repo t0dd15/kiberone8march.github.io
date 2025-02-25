@@ -1,0 +1,166 @@
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #1e3c72, #ff007a);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    animation: gradientShift 10s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% { background: linear-gradient(135deg, #1e3c72, #ff007a); }
+    50% { background: linear-gradient(135deg, #ff007a, #2a5298); }
+    100% { background: linear-gradient(135deg, #1e3c72, #ff007a); }
+}
+
+.container {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.text-box {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
+    width: 90%;
+    opacity: 0;
+    transform: translateY(70px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+    text-align: center;
+}
+
+.text-box.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+h1 {
+    color: #ff007a;
+    font-size: 2.8em;
+    font-weight: 700;
+    margin: 0;
+}
+
+p {
+    color: #1e3c72;
+    font-size: 1.3em;
+    line-height: 1.5;
+}
+
+.mini-message {
+    display: block;
+    color: #ff007a;
+    font-size: 1.2em;
+    margin-top: 10px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.mini-message.show {
+    opacity: 1;
+}
+
+button {
+    padding: 15px 40px;
+    font-size: 1.3em;
+    font-weight: 700;
+    background: linear-gradient(45deg, #ff007a, #1e3c72);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative; /* Убираем absolute, чтобы кнопка следовала за текстом */
+    margin-top: 20px; /* Добавляем отступ сверху */
+}
+
+button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+#surprise {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+    font-size: 2.5em;
+    animation: fall 30s ease-out forwards; /* Увеличиваем до 30 секунд */
+}
+
+@keyframes fall {
+    0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; } /* Начинаем выше экрана */
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
+
+/* Медиа-запросы для телефонов */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2em;
+    }
+
+    p {
+        font-size: 1em;
+    }
+
+    .mini-message {
+        font-size: 1em;
+    }
+
+    .text-box {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+
+    button {
+        padding: 10px 30px;
+        font-size: 1em;
+        margin-top: 15px;
+    }
+
+    .particle {
+        font-size: 1.8em;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5em;
+    }
+
+    p {
+        font-size: 0.9em;
+    }
+
+    .mini-message {
+        font-size: 0.9em;
+    }
+
+    button {
+        padding: 8px 20px;
+        font-size: 0.9em;
+        margin-top: 10px;
+    }
+
+    .particle {
+        font-size: 1.5em;
+    }
+}
