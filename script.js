@@ -28,7 +28,7 @@ function showSurprise() {
     miniMessage.classList.add('show');
 
     // Очищаем предыдущие частицы
-    surpriseDiv.innerHTML = '';
+    //     surpriseDiv.innerHTML = '';
 
     // Массив элементов
     const particles = ['🎉', '💖', '🌸', '✨', '🌟', '🌺'];
@@ -39,7 +39,7 @@ function showSurprise() {
         particle.className = 'particle';
         particle.style.left = Math.random() * 100 + '%';
         particle.style.top = '-10vh'; // Начинаем выше экрана
-        particle.style.animationDuration = Math.random() * 1 + 1 + 's'; // От 25 до 30 секунд
+        particle.style.animationDuration = Math.random() * 30 + 30 + 's'; // От 25 до 30 секунд
         particle.style.color = `hsl(${Math.random() * 360}, 80%, 60%)`;
         surpriseDiv.appendChild(particle);
     }
