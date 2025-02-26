@@ -39,7 +39,7 @@ function showSurprise() {
         particle.className = 'particle';
         particle.style.left = Math.random() * 100 + '%';
         particle.style.top = '-10vh'; // Начинаем выше экрана
-        particle.style.animationDuration = Math.random() * 5 + 25 + 's'; // От 25 до 30 секунд
+        particle.style.animationDuration = Math.random() * 30 + 40 + 's'; // От 25 до 30 секунд
         particle.style.color = `hsl(${Math.random() * 360}, 80%, 60%)`;
         surpriseDiv.appendChild(particle);
     }
