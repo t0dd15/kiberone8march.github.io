@@ -2,20 +2,58 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>С 8 марта от KIBERone!</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <title>8 Марта Хаб</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0; padding: 0;
+            background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%);
+            font-family: 'Montserrat', sans-serif;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-height: 100vh; text-align: center;
+        }
+        .container { width: 95%; max-width: 1200px; }
+        h1 { color: #d81b60; font-size: 3rem; margin-bottom: 40px; }
+
+        /* Выравнивание в одну строку */
+        .grid-row {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            overflow-x: auto; /* На случай узкого экрана */
+            padding: 20px 10px;
+        }
+
+        .card {
+            flex: 0 0 180px; /* Фиксированная ширина для ряда */
+            padding: 30px 15px;
+            border-radius: 20px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: 0.3s;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            display: flex; flex-direction: column; align-items: center; gap: 10px;
+        }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 12px 20px rgba(0,0,0,0.2); }
+
+        .btn-karina { background: #6d4a97; }
+        .btn-katya { background: #ff85a2; }
+        .btn-masha-l { background: #2c3e50; }
+        .btn-masha-d { background: #ef3124; }
+        .btn-nastya { background: #4caf50; }
+    </style>
 </head>
 <body>
     <div class="container">
-        <div class="text-box">
-            <h1 id="greeting">Дорогие наши юные кодеры и мечтательницы! 💻</h1>
-            <p id="message">С 8 марта вас поздравляет команда KIBERone — кибершкола будущего! Пусть ваши идеи сияют ярче звёзд, а каждый новый день приносит код для счастья и вдохновение для больших открытий. Вы — настоящие героини цифрового мира, и мы гордимся тем, что вы создаёте будущее своими руками. Растите смелыми, творите с радостью и пусть весна подарит вам бесконечный поток креативности! 🌟</p>
-            <span id="mini-message" class="mini-message"></span>
+        <h1>С 8 Марта, коллеги! 🌷</h1>
+        <div class="grid-row">
+            <a href="karina.html" class="card btn-karina"><span>💜</span>КАРИНА</a>
+            <a href="katya.html" class="card btn-katya"><span>🌸</span>КАТЯ</a>
+            <a href="mashaL.html" class="card btn-masha-l"><span>📊</span>МАША Л.</a>
+            <a href="mashaD.html" class="card btn-masha-d"><span>🅰️</span>МАША Д.</a>
+            <a href="nastya.html" class="card btn-nastya"><span>⚔️</span>НАСТЯ</a>
         </div>
-        <button onclick="showSurprise()">Получить сюрприз 🚀</button>
-        <div id="surprise"></div>
     </div>
-    <script src="script.js"></script>
 </body>
 </html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>BTS Mega Quiz | Карина</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #121212;
+            color: #bb86fc;
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        .quiz-container {
+            border: 2px solid #bb86fc;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 600px;
+            margin: 20px auto;
+            background: #1a1a1a;
+            box-shadow: 0 0 25px rgba(187, 134, 252, 0.3);
+        }
+        h1 { color: #fff; text-shadow: 2px 2px #bb86fc; margin-bottom: 10px; }
+        .progress-bar {
+            height: 10px;
+            background: #333;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        #progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #bb86fc, #03dac6);
+            width: 0%;
+            transition: 0.4s;
+        }
+        .question-box { min-height: 120px; display: flex; flex-direction: column; justify-content: center; }
+        
+        .btn-option {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            background: transparent;
+            color: #bb86fc;
+            border: 2px solid #bb86fc;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+
+        /* Цвета проверки */
+        .correct { background: #2ecc71 !important; color: #fff !important; border-color: #2ecc71 !important; }
+        .wrong { background: #e74c3c !important; color: #fff !important; border-color: #e74c3c !important; }
+
+        .nav-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .btn-nav {
+            background: none;
+            border: 1px solid #777;
+            color: #777;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-nav:hover:not(:disabled) { border-color: #bb86fc; color: #bb86fc; }
+        .btn-nav:disabled { opacity: 0.3; cursor: not-allowed; }
+
+        .back-link {
+            color: #777;
+            text-decoration: none;
+            margin-top: 20px;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+        .back-link:hover { color: #bb86fc; }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-container">
+        <h1>ARMY MEGA QUIZ 💜</h1>
+        <div class="progress-bar"><div id="progress-fill"></div></div>
+        <p id="score-text">Вопрос 1 из 30</p>
+
+        <div class="question-box">
+            <h2 id="question-text">Загрузка...</h2>
+        </div>
+
+        <div id="options"></div>
+
+        <div class="nav-controls">
+            <button id="prev-btn" class="btn-nav" onclick="prevQuestion()">← Назад</button>
+            <span id="feedback-text" style="font-size: 0.8rem; align-self: center; color: #555;">Выбери ответ</span>
+        </div>
+    </div>
+
+    <a href="index.html" class="back-link">← Вернуться в хаб к коллегам</a>
+
+    <script>
+        const questions = [
+            { q: "Как называется дебютный сингл-альбом BTS?", a: ["Skool Luv Affair", "2 Cool 4 Skool", "Dark & Wild"], correct: 1 },
+            { q: "Точная дата дебюта группы?", a: ["13 июня 2013", "12 июня 2013", "14 июня 2014"], correct: 0 },
+            { q: "Кто был первым участником, присоединившимся к Big Hit?", a: ["Suga", "RM", "J-Hope"], correct: 1 },
+            { q: "Угадай песню по эмодзи: 🧨🧊⚡", a: ["Butter", "Dynamite", "Stay Gold"], correct: 1 },
+            { q: "Название фандома A.R.M.Y расшифровывается как...", a: ["Adorable Representative M.C. for Youth", "Amazing Real Music Youth", "All Real Music Young"], correct: 0 },
+            { q: "Кто из участников самый младший (Золотой Макнэ)?", a: ["V", "Jungkook", "Jimin"], correct: 1 },
+            { q: "Какая фраза Тэхёна стала девизом ARMY?", a: ["I purple you (Borahae)", "Love Yourself", "Shine Dream Smile"], correct: 0 },
+            { q: "Как назывался первый полноформатный альбом BTS?", a: ["Wake Up", "Dark & Wild", "Wings"], correct: 1 },
+            { q: "Кто выпустил сольный альбом 'Indigo'?", a: ["RM", "Suga", "J-Hope"], correct: 0 },
+            { q: "В каком году BTS впервые посетили премию Грэмми?", a: ["2018", "2019", "2020"], correct: 1 },
+            { q: "Угадай песню по эмодзи: 🦢🖤", a: ["Black Swan", "Shadow", "Louder than bombs"], correct: 0 },
+            { q: "Сценическое имя Мин Юнги как сольного исполнителя?", a: ["V", "Agust D", "Hope World"], correct: 1 },
+            { q: "Кто из участников является 'World Wide Handsome'?", a: ["Jin", "V", "Jimin"], correct: 0 },
+            { q: "Какой город является родиной Тэхёна (V)?", a: ["Тэгу", "Пусан", "Сеул"], correct: 0 },
+            { q: "В какой дораме снялся Ким Тэхён (V)?", a: ["Хваран", "Гоблин", "Наследники"], correct: 0 },
+            { q: "Как называется серия влогов о путешествиях парней?", a: ["Run BTS", "Bon Voyage", "BTS Gayo"], correct: 1 },
+            { q: "Какое животное представляет Чонгука в BT21?", a: ["Коала (Koya)", "Кролик (Cooky)", "Печенька (Shooky)"], correct: 1 },
+            { q: "Угадай песню по эмодзи: 👦💖🌹", a: ["Boy In Luv", "Boy With Luv", "Save Me"], correct: 1 },
+            { q: "Кто в группе главный хореограф и 'Солнышко'?", a: ["RM", "J-Hope", "Suga"], correct: 1 },
+            { q: "С каким артистом была коллаборация 'My Universe'?", a: ["Halsey", "Coldplay", "Snoop Dogg"], correct: 1 },
+            { q: "Как называется сольный трек Чимина из альбома 'Face'?", a: ["Like Crazy", "Set Me Free Pt.2", "Filter"], correct: 0 },
+            { q: "Первая песня BTS полностью на английском языке?", a: ["Butter", "Dynamite", "Permission to Dance"], correct: 1 },
+            { q: "В каком городе родился Чимин?", a: ["Тэгу", "Пусан", "Кванджу"], correct: 1 },
+            { q: "Название альбома, вышедшего в пандемию в 2020 году?", a: ["BE", "Map of the Soul: 7", "Love Yourself: Answer"], correct: 0 },
+            { q: "Угадай песню по эмодзи: 🎤💧", a: ["Mic Drop", "Fire", "Dope"], correct: 0 },
+            { q: "Как зовут собаку Тэхёна?", a: ["Minnie", "Yeontan", "Holly"], correct: 1 },
+            { q: "Кто из участников любит читать и посещать музеи ('Namjooning')?", a: ["RM", "Jin", "Suga"], correct: 0 },
+            { q: "Как называется сольный трек Джина, посвященный ARMY (2022)?", a: ["The Astronaut", "Abyss", "Moon"], correct: 0 },
+            { q: "Сколько всего участников в BTS?", a: ["5", "7", "9"], correct: 1 },
+            { q: "Самый важный ответ: Карина, ты готова пройти квест до конца?", a: ["Да!", "Конечно!", "Я — настоящая ARMY!"], correct: 2 }
+        ];
+
+        let currentQ = 0;
+        let userAnswers = []; 
+        let isLocked = false; // Блокировка кликов во время анимации
+
+        function loadQuestion() {
+            isLocked = false;
+            const q = questions[currentQ];
+            document.getElementById('question-text').innerText = q.q;
+            document.getElementById('score-text').innerText = `Вопрос ${currentQ + 1} из ${questions.length}`;
+            document.getElementById('progress-fill').style.width = ((currentQ + 1) / questions.length * 100) + "%";
+            document.getElementById('prev-btn').disabled = currentQ === 0;
+            document.getElementById('feedback-text').innerText = "Выбери ответ";
+
+            const options = document.getElementById('options');
+            options.innerHTML = '';
+            
+            q.a.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'btn-option';
+                btn.innerText = opt;
+                
+                // Если мы вернулись назад, подсвечиваем то, что уже выбрали
+                if (userAnswers[currentQ] !== undefined) {
+                    if (i === q.correct) btn.classList.add('correct');
+                    else if (i === userAnswers[currentQ]) btn.classList.add('wrong');
+                }
+
+                btn.onclick = () => checkAnswer(i, btn);
+                options.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(i, btn) {
+            if (isLocked) return;
+            isLocked = true;
+
+            const q = questions[currentQ];
+            userAnswers[currentQ] = i;
+
+            // Визуальная проверка
+            if (i === q.correct) {
+                btn.classList.add('correct');
+                document.getElementById('feedback-text').innerText = "Верно! ✨";
+            } else {
+                btn.classList.add('wrong');
+                document.getElementById('feedback-text').innerText = "Упс, не совсем... 💜";
+                // Подсвечиваем правильный, чтобы Карина знала
+                const buttons = document.querySelectorAll('.btn-option');
+                buttons[q.correct].classList.add('correct');
+            }
+
+            // Задержка перед переходом, чтобы успеть увидеть результат
+            setTimeout(() => {
+                currentQ++;
+                if (currentQ < questions.length) loadQuestion();
+                else finish();
+            }, 1200);
+        }
+
+        function prevQuestion() {
+            if (currentQ > 0) {
+                currentQ--;
+                loadQuestion();
+            }
+        }
+
+        function finish() {
+            let finalScore = 0;
+            userAnswers.forEach((ans, index) => {
+                if (ans === questions[index].correct) finalScore++;
+            });
+
+            const container = document.querySelector('.quiz-container');
+            container.innerHTML = `
+                <h1 style="font-size: 3rem;">💜 ФИНАЛ 💜</h1>
+                <p style="font-size: 1.4rem;">Карина, твой результат: ${finalScore} из ${questions.length}</p>
+                <p style="margin: 20px 0; line-height: 1.6;">Ты — настоящая гордость фандома! Пусть этот день будет таким же ярким, как концерт BTS!</p>
+                <button class="btn-option" onclick="location.reload()">Пройти еще раз</button>
+                <a href="index.html" class="back-link">Вернуться на главную</a>
+            `;
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
